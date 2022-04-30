@@ -37,15 +37,16 @@ def login_eval_jobrecruiter(request):
 
   
 			print("Inside request.post")
-			reg = jobseeker_model(
+			reg = jobs_model(
 				job_title=job_title,
 				job_description=job_desc,
 				job_skills=job_skills,
-				job_experieance=job_experience,
+				job_experiance=job_experience,
 				job_company_name=job_company_name,
 				job_company_email=job_company_email,
 				)
-			reg.save()
+			if job_title!=None:
+				reg.save()
 			print(reg)
 		except:
 			pass
@@ -56,6 +57,7 @@ def login_eval_jobrecruiter(request):
 		for i in serializer_job.data:
 			jobs_list.append(dict(i))
 		print(jobs_list)
+  
 
 
 
@@ -65,18 +67,37 @@ def login_eval_jobrecruiter(request):
 		for i in serializer.data:
 			recruiter_list.append(dict(i))
 		print(recruiter_list)
+  
+		if rec_name==None:
+			for attributes in recruiter_list:
+				if attributes['company_name']==job_company_name:
+					rec_name=attributes['name']
+					email=attributes['email']
+					pwsd= attributes['pwsd']
+					break
+  
+  
 		Flag=False
 		login_recruiter=[]
   
 
-  
+		company_job_list=[]
 		for attributes in recruiter_list:
 			Flag=False
 			if attributes['email']==email and attributes['name']==rec_name and attributes['pwsd']==pwsd:
 				login_recruiter.append(attributes)
 				print(login_recruiter[0])
+				recruiter=login_recruiter[0]
 				Flag=True
-				return render(request,'login_jobrecruiter.html',{'user':login_recruiter[0]})
+				print(jobs_list)
+				for job in jobs_list:
+					print(job['job_company_name'])
+					print(recruiter['company_name'])
+					if job['job_company_name']==recruiter['company_name']:
+						print("JOB IS ADDED TO FILE LIST")
+						company_job_list.append(job)
+				print(company_job_list)
+				return render(request,'login_jobrecruiter.html',{'user':login_recruiter[0],'jobs':company_job_list})
 			if Flag==True:
 				break
 				
@@ -187,10 +208,16 @@ def reg_jobrecruiter(request):
 		reg_recruiter.save()
 		print(reg_recruiter)
 
-		return render(request,'login_jobrecruiter.html',{'user':reg_recruiter})
+		return render(request,'login.html',{'user':reg_recruiter})
 
+"""
 def login_jobrecruiter(request):
 	return render(request,'login_jobrecruiter.html',{})
+	"""
+ 
+ 
+ 
+ 
 
 def post_job(request):
 	return render(request,'post-job.html',{})

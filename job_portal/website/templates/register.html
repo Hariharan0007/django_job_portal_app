@@ -13,12 +13,12 @@
             <h1 class="text-white font-weight-bold">Welcome to Job-Hunt
                 <ul class="dropdown text-white font-weight-bold ">
                   <li><a href="register.html">Register</a></li>
-                  <li><a href="login.html">Login</a></li>
+                  <li><a href={% url 'home' %}>Login</a></li>
                 </ul>
               
             </h1>
             <div class="custom-breadcrumbs">
-              <a href="{% url 'home' %}">Home</a> <span class="mx-2 slash">/</span>
+              <a href={% url 'home' %}>Home</a> <span class="mx-2 slash">/</span>
               <span class="text-white"><strong>Log In</strong></span>
             </div>
           </div>
@@ -31,7 +31,7 @@
         <div class="row">
           <div class="col-lg-6 mb-5">
             <h2 class="mb-4">Sign Up as Recruiter</h2>
-            <form action={% url 'jobrecruiter' %} class="p-4 border rounded" method="POST">
+            <form  method="POST" action={% url 'jobrecruiter' %} class="p-4 border rounded" >
               {% csrf_token %}
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">

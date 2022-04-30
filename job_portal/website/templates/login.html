@@ -12,7 +12,7 @@
           <div class="col-md-7">
             <h1 class="text-white font-weight-bold">Welcome to Job-Hunt
                 <ul class="dropdown text-white font-weight-bold ">
-                  <li><a href="register.html">Register</a></li>
+                  <li><a href={% url 'register' %}>Register</a></li>
                   <li><a href={% url 'home' %}>Login</a></li>
                 </ul>
               
@@ -31,7 +31,7 @@
         <div class="row">
           <div class="col-lg-6 mb-5">
             <h2 class="mb-4">Log in as Recruiter</h2>
-            <form method="POST" action={% url 'login_eval_jobrecruiter' %} class="p-4 border rounded" method="POST">
+            <form method="POST" action={% url 'login_eval_jobrecruiter' %} class="p-4 border rounded">
               {% csrf_token %}
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">

@@ -41,7 +41,7 @@
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label class="text-black" for="email">Email</label>
                   <!--<input type="email" name="email" class="form-control" placeholder="Email-address" value={{user.email}} readonly>-->
-                  <p><strong>{{user.mobile}}</strong></p>
+                  <p><strong>{{user.email}}</strong></p>
                 </div>
               </div>
 
@@ -71,11 +71,11 @@
                 </div>
               </div>
 
-              <div class="row  text-right form-group">
+              <!--<div class="row  text-right form-group">
                 <div class="col-md-12">
                   <input type="submit" value="Update" class="btn px-4 btn-primary text-white">
                 </div>
-              </div>
+              </div>-->
 
             </form>
             
@@ -93,7 +93,14 @@
           <div class="row">
             <div class="col-lg-3 mb-5">
               <h2 class="mb-4">Posted Jobs</h2>
-
+              
+              {% for job in  jobs%}
+                  Title : {{job.job_title}}</br>
+                  Description : {{job.job_description}}</br>
+                  Skills : {{job.job_skills}}</br>
+                  Experience : {{job.job_experiance}}</br>
+              </br></br>
+              {% endfor %}
               
             </div>
       </section>
@@ -148,20 +155,29 @@
                   <label for="company-email">Registerd Email</label>
                   <input type="text" class="form-control" name="company-email" placeholder="abc@email.com">
                 </div>
-  
+
+                <div class="row form-group">
+                  <div class="col-md-12">
+                    <input type="submit" value="Save Job" class="btn px-4 btn-primary text-white">
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!--
           <div class="row align-items-center mb-5">
             
             <div class="col-lg-4 ml-auto">
-              <div class="row">
+              <div class="row">-->
                 <!--<div class="col-6">
                   <a href="#" class="btn btn-block btn-light btn-md"><span class="icon-open_in_new mr-2"></span>Preview</a>
                 </div>-->
-                <div class="col-6 ">
+                <!--<div class="col-6 ">
                   <a href="#" class="btn btn-block btn-primary btn-md">Save Job</a>
                 </div>
               </div>
             </div>
-          </div>
+          </div>-->
         </div>
       </section>
   
