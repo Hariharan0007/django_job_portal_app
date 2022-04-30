@@ -1,0 +1,109 @@
+{% extends 'login_base_jobseeker.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+    <!-- HOME -->
+
+
+    <section class="section-hero overlay inner-page bg-image" style="background-image: url('{% static 'website/images/hero_1.jpg' %}');" id="home-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <h1 class="text-white font-weight-bold">Welcome to Job-Hunt
+            </h1>
+            <div class="custom-breadcrumbs">
+              <a href={% url 'home' %}>Home</a> <span class="mx-2 slash">/</span>
+              <span class="text-white"><strong>Job Seeker / {{user.name}}</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mb-5">
+            <h2 class="mb-4">My Profile -- {{user.name}}</h2>
+            <form action="login_jobseeker.html" class="p-4 border rounded">
+
+                <div class="row form-group">
+                    <div class="col-md-12 mb-3 mb-md-0">
+                      <label class="text-black" for="name">Name</label>
+                      <input type="text" id="name" class="form-control" placeholder="Name" value={{user.name}} readonly>
+                    </div>
+                  </div>
+
+              <div class="row form-group">
+                <div class="col-md-12 mb-3 mb-md-0">
+                  <label class="text-black" for="email">Email</label>
+                  <input type="email" id="email" class="form-control" placeholder="Email-address" value={{user.email}} readonly>
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-md-12 mb-3 mb-md-0">
+                  <label class="text-black" for="dob">Date of Birth</label>
+                  <input type="text" id="dob" class="form-control" placeholder="DOB" value={{user.dob}} readonly>
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-md-12 mb-3 mb-md-0">
+                  <label class="text-black" for="mobile">Mobile</label>
+                  <input type="number" id="mobile" class="form-control" placeholder="Mobile" value={{user.mobile}} readonly>
+                </div>
+              </div>
+
+
+              <div class="row form-group">
+                <div class="col-md-12 mb-3 mb-md-0">
+                  <label class="text-black" for="fname">Education Details</label>
+                </br>
+                  <text>Degree</text>
+                  <input type="text" id="degree" class="form-control" placeholder="Degree/Highest Education" value={{user.degree}} readonly>
+                </br>
+                <text>Passed-out-year</text>
+                  <input type="date" id="poy" class="form-control" placeholder="Passed-out Year" value={{user.passed_out_year}} readonly> 
+                </br>
+                <text>Percentile</text>
+                  <input type="number" id="percentile" class="form-control" placeholder="Percentile" value={{user.percentile}} readonly>
+                </br>
+                <text>Experience</text>
+                  <input type="number" id="experience" class="form-control" placeholder="Experience" value={{ user.experience }} readonly>
+                </br>
+                </div>
+              </div>
+
+              <div class="row  text-right form-group">
+                <div class="col-md-12">
+                  <input type="submit" value="Update" class="btn px-4 btn-primary text-white">
+                </div>
+              </div>
+
+            </form>
+            
+
+            </div>
+           </div> 
+          </div>
+    </section>
+
+
+
+
+    <section class="site-section">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-3 mb-5">
+              <h2 class="mb-4">Applied Jobs</h2>
+
+              
+            </div>
+      </section>
+    
+{% endblock %}
