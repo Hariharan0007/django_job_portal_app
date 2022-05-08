@@ -23,6 +23,8 @@ urlpatterns = [
     
     path('loggedin_recruiter',views.reg_jobrecruiter,name='jobrecruiter'),
     
+    path('job_apply',views.job_apply, name='job_apply'),
+    
     path('post-job.html',views.post_job,name='post_job'),
     
     path('job-single.html',views.job_single,name='job_single'),

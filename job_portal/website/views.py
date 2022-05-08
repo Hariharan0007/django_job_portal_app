@@ -1,8 +1,8 @@
 from django.shortcuts import render
 
 from rest_framework.decorators import api_view
-from .models import jobseeker_model,jobrecruiter_model,jobs_model
-from .serializers import log_jobseeker_Serializer,log_jobrecruiter_Serializer,log_jobsmodel_Serializer
+from .models import jobseeker_model,jobrecruiter_model,jobs_model,job_apply_model
+from .serializers import log_jobseeker_Serializer,log_jobrecruiter_Serializer,log_jobsmodel_Serializer,job_apply_Serializer
 
 
 # Create your views here.
@@ -111,21 +111,71 @@ def login_eval_jobseeker(request):
 		email=request.POST.get('email')
 		pwsd=request.POST.get('password')
 		print(seeker_name,email,pwsd)
+  
+		job_models=jobs_model.objects.all()
+		serializer_job = log_jobsmodel_Serializer(job_models,many=True)
+		jobs_list=[]
+		for i in serializer_job.data:
+			jobs_list.append(dict(i))
+		print(jobs_list)
+
+
+
+		#getting a list of jobs which are applied by the seeker  
+		job_apply_models=job_apply_model.objects.all()
+		serializer_applied_job = job_apply_Serializer(job_apply_models,many=True)
+		applied_list=[]
+		for i in serializer_applied_job.data:
+			applied_list.append(dict(i))
+		print("APPLIED JOBS---->>>>",applied_list)
+		
+    
+  
 		jobseeker_models=jobseeker_model.objects.all()
 		serializer = log_jobseeker_Serializer(jobseeker_models,many=True)
 		seekers_list=[]
 		for i in serializer.data:
 			seekers_list.append(dict(i))
-		print(seekers_list)
+		print("SEEKERS LIST ---->> \n \n",seekers_list)
 		Flag=False
 		login_seeker=[]
+  
+  
+  
 		for attributes in seekers_list:
 			Flag=False
+			print(attributes)
 			if attributes['email']==email and attributes['name']==seeker_name and attributes['pwsd']==pwsd:
+				print("INSIDE IF :)")
 				login_seeker.append(attributes)
-				print(login_seeker[0])
+				print("LOGGED IN SEEKER---->> \n \n",login_seeker[0])
 				Flag=True
-				return render(request,'login_jobseeker.html',{'user':login_seeker[0]})
+				applied_job_list=[]
+				if applied_list!=[]:
+					for seeker_job in login_seeker:
+						print("SEEKER JOB--> \n \n",seeker_job)
+						for app_job in applied_list:
+							print("APPLIED JOB -->> \n \n",app_job)
+							for jobs in jobs_list:
+								print("JOBS---->>> \n \n",jobs)
+								if app_job['job_title']==jobs['job_title'] and app_job['job_company_email'] == jobs['job_company_email'] and app_job['job_seeker_email']==seeker_job['email']:
+									applied_job_list.append(dict(jobs))
+					print(applied_job_list)
+					new_jobs_list=[]
+					for jb in applied_job_list:
+						print(jb)
+						for jobs in jobs_list:
+							print(jobs)
+							if jb['job_title']==jobs['job_title'] and jb['job_company_email']==jobs['job_company_email']:
+								pass
+							else:
+								new_jobs_list.append(jobs)
+					print(new_jobs_list)
+				else:
+					new_jobs_list=jobs_list
+					applied_job_list=None
+				return render(request,'login_jobseeker.html',{'user':login_seeker[0],'jobs':new_jobs_list,'applied_job':applied_job_list})
+			print("AFTER IF STATEMENT :(")
 			if Flag==True:
 				break
 				
@@ -165,8 +215,8 @@ def reg_jobseeker(request):
 			passed_out_year=poy,
 			percentile=percentile,
 			experience=experiance,
-			applied_job="None",
-			applied_company="None"
+			applied_job=0,
+			applied_company=0
    		)
         reg.save()
         print(reg)
@@ -214,6 +264,93 @@ def reg_jobrecruiter(request):
 def login_jobrecruiter(request):
 	return render(request,'login_jobrecruiter.html',{})
 	"""
+ 
+ 
+def job_apply(request):
+    print("JOB  IS  TRYING  TO APPLY")
+    if request.method == 'POST':
+        job_name=request.POST.get('job_name')
+        job_seeker_mail=request.POST.get('jobseeker_mail_id')
+        company_mail=request.POST.get('job_company_email')
+        
+        print(company_mail)
+        print(job_name)
+        print(job_seeker_mail)
+        
+        job_apply = job_apply_model(
+			job_seeker_email=job_seeker_mail,
+			job_title=job_name,
+			job_company_email=company_mail
+		)
+        
+        job_apply.save()
+        print("Data Saved in a Model")
+
+        
+        # getting a list of jobs  
+        job_models=jobs_model.objects.all()
+        serializer_job = log_jobsmodel_Serializer(job_models,many=True)
+        jobs_list=[]
+        for i in serializer_job.data:
+            jobs_list.append(dict(i))
+        print(jobs_list)
+        
+        #getting a list of jobs which are applied by the seeker  
+        job_apply_models=job_apply_model.objects.all()
+        serializer_applied_job = job_apply_Serializer(job_apply_models,many=True)
+        applied_list=[]
+        for i in serializer_applied_job.data:
+            applied_list.append(dict(i))
+        print(applied_list)
+        
+        
+        
+        #getting data of a seeker 
+        jobseeker_models=jobseeker_model.objects.all()
+        serializer = log_jobseeker_Serializer(jobseeker_models,many=True)
+        seekers_list=[]
+        for i in serializer.data:
+            seekers_list.append(dict(i))
+        print(seekers_list)
+        Flag=False
+        login_seeker=[]
+        
+        #getting active job seeker(logged in)
+        for attributes in seekers_list:
+            Flag=False
+            if attributes['email']==job_seeker_mail :
+                login_seeker.append(attributes)
+                print(login_seeker[0])
+                Flag=True
+        
+        
+        #getting applied jobs    
+        applied_job_list=[]
+        for seeker_job in login_seeker:
+            for app_job in applied_list:
+                for jobs in jobs_list:
+                    if app_job['job_title']==jobs['job_title'] and app_job['job_company_email'] == jobs['job_company_email'] and app_job['job_seeker_email']==seeker_job['email']:
+                        applied_job_list.append(dict(jobs))
+                        
+        
+        #update new jobs list
+        new_jobs_list=[]
+        for jb in applied_job_list:
+            for jobs in jobs_list:
+                if jb['job_title']==jobs['job_title'] and jb['job_company_email']==jobs['job_company_email']:
+                    pass
+                else:
+                    new_jobs_list.append(jobs)
+                     		
+                
+            
+        
+
+        
+        return render(request,'login_jobseeker.html',{'user':login_seeker[0],'jobs':new_jobs_list,'applied_job':applied_job_list})
+        #if Flag==False:
+        #    return render(request,'register.html')
+        
  
  
  

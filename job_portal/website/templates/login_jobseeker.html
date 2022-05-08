@@ -4,6 +4,7 @@
 
 {% block content %}
 
+    
 
     <!-- HOME -->
 
@@ -22,6 +23,88 @@
         </div>
       </div>
     </section>
+
+
+    
+    <section class="site-section">
+      <div class="container">
+        <div class="border border-5">
+          <h2>Recommended Jobs for you</h2>
+          <div class="container mb-3">
+        {% for job in jobs %}
+        <div class="col mb-5">
+        <div class="card mb-4">
+          <h3 class="card-header">{{ job.job_title}}</h3>
+            <div class="card-body">
+            <h6 class="card-title">{{ job.job_description }}</h6>
+            <p class="card-text"><h5>Required Experience :</h5>{{ job.job_experiance }}<br><h5>Required Skills :</h5>{{ job.job_skills }}<br><h5>Company :</h5>{{ job.job_company_name }}<br><h5>Contact :</h5>{{ job.job_company_email }}</p>
+
+            <form class="input-group mb-3" method="POST" action={% url 'job_apply' %}>
+              {% csrf_token %}
+              <input type="text" class="form-control"  placeholder="Enter Your Email Id to Apply..." name="jobseeker_mail_id" aria-describedby="button-addon2">
+              <input type="text" class="form-control" placeholder="Enter The Job Name" name="job_name" aria-describedby="button-addon2">
+              <button class="btn btn-outline-success" type="submit" name="job_company_email" value={{ job.job_company_email }}>Apply</button>
+            </form>
+            
+          </div>
+        </div>
+      </div>
+
+        {% endfor %}
+        </div>
+      </div>
+    </div>
+        <!--
+        <div class="row">
+          
+            
+              
+              <div>
+              
+
+              </div>
+              
+          </div>
+        </div>-->
+    </section>
+
+
+
+    <section class="site-section">
+      <div class="container">
+          <div class="border border-5">
+            {% if applied_job != None %}
+            <h2 class="mb-4">Applied Jobs</h2>
+            <div class="container mb-3">
+              {% for job in applied_job %}
+              <div class="col mb-5">
+              <div class="card mb-4">
+                <h3 class="card-header">{{ job.job_title}}</h3>
+                  <div class="card-body">
+                  <h6 class="card-title">{{ job.job_description }}</h6>
+                  <p class="card-text"><h5>Required Experience :</h5>{{ job.job_experiance }}<br><h5>Required Skills :</h5>{{ job.job_skills }}<br><h5>Company :</h5>{{ job.job_company_name }}<br><h5>Contact :</h5>{{ job.job_company_email }}</p>
+                  <!--
+                  <form class="input-group mb-3" method="POST" action={% url 'job_apply' %}>
+                    {% csrf_token %}
+                    <input type="text" class="form-control"  placeholder="Enter Your Email Id to Apply..." name="jobseeker_mail_id" aria-describedby="button-addon2">
+                    <input type="text" class="form-control" placeholder="Enter The Job Name" name="job_name" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-success" type="submit" name="job_company_email" value={{ job.job_company_email }}>Apply</button>
+                  </form>
+                -->
+                  
+                </div>
+              </div>
+            </div>
+      
+              {% endfor %}
+              </div>
+              {% endif %}
+            
+          </div>
+    </section>
+
+
+
 
 
     <section class="site-section">
@@ -96,14 +179,6 @@
 
 
 
-    <section class="site-section">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-3 mb-5">
-              <h2 class="mb-4">Applied Jobs</h2>
-
-              
-            </div>
-      </section>
+    
     
 {% endblock %}

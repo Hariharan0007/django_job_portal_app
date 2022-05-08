@@ -13,8 +13,8 @@ class jobseeker_model(models.Model):     # Jobseeker Registration
     passed_out_year = models.DateField(max_length=20)
     percentile = models.IntegerField()
     experience = models.IntegerField()
-    applied_job = models.CharField(max_length=100)
-    applied_company = models.CharField(max_length=100)
+    #applied_job = models.CharField(max_length=100)
+    #applied_company = models.CharField(max_length=100)
     
     def __str__(self):
         return self.name + ' ' + self.email
@@ -42,4 +42,12 @@ class jobs_model(models.Model):
     job_company_email = models.EmailField(max_length=50)
     def __str__(self):
         return self.job_company_name +' ' + self.job_title + ' ' + self.job_company_email
+    
+    
+class job_apply_model(models.Model):
+    job_title = models.CharField(max_length=100)
+    job_company_email = models.EmailField(max_length=50)
+    job_seeker_email = models.EmailField(max_length=50)
+    def __str__(self):
+        return self.job_seeker_email + '-->>' +self.job_title + ' ' + self.job_company_email 
         
