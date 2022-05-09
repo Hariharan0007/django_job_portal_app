@@ -158,9 +158,11 @@ def login_eval_jobseeker(request):
 							print("APPLIED JOB -->> \n \n",app_job)
 							for jobs in jobs_list:
 								print("JOBS---->>> \n \n",jobs)
+								print("CONDITION CHECK===>\n \n",app_job['job_title'],app_job['job_company_email'],app_job['job_seeker_email'])
+								print("CONDITION CHECK===>\n \n",jobs['job_title'],jobs['job_company_email'],seeker_job['email'])
 								if app_job['job_title']==jobs['job_title'] and app_job['job_company_email'] == jobs['job_company_email'] and app_job['job_seeker_email']==seeker_job['email']:
-									applied_job_list.append(dict(jobs))
-					print(applied_job_list)
+									applied_job_list.append(jobs)
+					print("APPLIED JOBS LIST ==>>>",applied_job_list)
 					new_jobs_list=[]
 					for jb in applied_job_list:
 						print(jb)
@@ -170,7 +172,7 @@ def login_eval_jobseeker(request):
 								pass
 							else:
 								new_jobs_list.append(jobs)
-					print(new_jobs_list)
+					print("NEW JOBS LIST",new_jobs_list)
 				else:
 					new_jobs_list=jobs_list
 					applied_job_list=None
@@ -335,13 +337,23 @@ def job_apply(request):
         
         #update new jobs list
         new_jobs_list=[]
-        for jb in applied_job_list:
-            for jobs in jobs_list:
+        for jobs in jobs_list:
+            for jb in applied_job_list: 
+                flag=True
+                print("CONDITION CHECK jb===>",jb['job_title'],jb['job_company_email'])
+                print("CONDITION CHECK jobs===>",jobs['job_title'],jobs['job_company_email'])
                 if jb['job_title']==jobs['job_title'] and jb['job_company_email']==jobs['job_company_email']:
-                    pass
-                else:
+                    flag=False
+                if flag!=False:
+                    print("JOB ADDED")
                     new_jobs_list.append(jobs)
-                     		
+        print(new_jobs_list)
+        
+        
+        #new_jobs_list=list(set(jobs_list).intersection(set(applied_job_list)))
+        #new_jobs_list=[]
+        
+        
                 
             
         
