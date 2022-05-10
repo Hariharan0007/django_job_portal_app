@@ -3,3 +3,21 @@
 
 
 python -m smtpd -n -c DebuggingServer localhost:2025
+
+
+for i in list1:
+  flag=False
+  for j in list2:
+    if i==j:
+      flag=True
+  if (flag==False):
+    result.append(i)
+    
+
+for i in list2:
+  flag=False
+  for j in list1:
+    if i==j:
+      flag=True
+  if (flag==False):
+    result.append(i)
