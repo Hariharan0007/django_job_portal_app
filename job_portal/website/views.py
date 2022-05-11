@@ -166,7 +166,7 @@ def login_eval_jobseeker(request):
 					new_jobs_list=[]
 					for jb in applied_job_list:
 						print(jb)
-						flag=False
+						flag=False #logic to get
 						for jobs in jobs_list:
 							print(jobs)
 							if jb['job_title']==jobs['job_title'] and jb['job_company_email']==jobs['job_company_email']:
