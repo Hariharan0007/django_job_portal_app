@@ -166,12 +166,13 @@ def login_eval_jobseeker(request):
 					new_jobs_list=[]
 					for jb in applied_job_list:
 						print(jb)
+						flag=False
 						for jobs in jobs_list:
 							print(jobs)
 							if jb['job_title']==jobs['job_title'] and jb['job_company_email']==jobs['job_company_email']:
-								pass
-							else:
-								new_jobs_list.append(jobs)
+								flag=True
+						if flag==False:
+							new_jobs_list.append(jb)
 					print("NEW JOBS LIST",new_jobs_list)
 				else:
 					new_jobs_list=jobs_list
@@ -338,15 +339,15 @@ def job_apply(request):
         #update new jobs list
         new_jobs_list=[]
         for jobs in jobs_list:
+            flag=False
             for jb in applied_job_list: 
-                flag=True
                 print("CONDITION CHECK jb===>",jb['job_title'],jb['job_company_email'])
                 print("CONDITION CHECK jobs===>",jobs['job_title'],jobs['job_company_email'])
                 if jb['job_title']==jobs['job_title'] and jb['job_company_email']==jobs['job_company_email']:
-                    flag=False
-                if flag!=False:
-                    print("JOB ADDED")
-                    new_jobs_list.append(jobs)
+                    flag=True
+            if flag==False:
+                print("JOB ADDED")
+                new_jobs_list.append(jobs)
         print(new_jobs_list)
         
         

@@ -45,7 +45,7 @@ class jobs_model(models.Model):
     
     
 class job_apply_model(models.Model):
-    job_title = models.CharField(max_length=100)
+    job_title = models.CharField(max_length=100,primary_key=True)
     job_company_email = models.EmailField(max_length=50)
     job_seeker_email = models.EmailField(max_length=50)
     def __str__(self):
