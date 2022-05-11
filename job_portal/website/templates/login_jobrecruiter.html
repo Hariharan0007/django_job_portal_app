@@ -22,73 +22,11 @@
     </section>
 
 
-    <section class="site-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 mb-5">
-            <h2 class="mb-4">My Profile - Recruiter</h2>
-            <form action={% url 'login_eval_jobrecruiter' %} class="p-4 border rounded">
-                {% csrf_token %}
-                <div class="row form-group">
-                    <div class="col-md-12 mb-3 mb-md-0">
-                      <label class="text-black" for="name">Name</label>
-                      <!--<input type="text" name="name" class="form-control" placeholder="Name" value={{user.name}} readonly>-->
-                      <p><strong>{{user.name}}</strong></p>
-                    </div>
-                  </div>
-
-              <div class="row form-group">
-                <div class="col-md-12 mb-3 mb-md-0">
-                  <label class="text-black" for="email">Email</label>
-                  <!--<input type="email" name="email" class="form-control" placeholder="Email-address" value={{user.email}} readonly>-->
-                  <p><strong>{{user.email}}</strong></p>
-                </div>
-              </div>
-
-
-              <div class="row form-group">
-                <div class="col-md-12 mb-3 mb-md-0">
-                  <label class="text-black" for="mobile">Mobile</label>
-                  <!--<input type="number" name="mobile" class="form-control" placeholder="Mobile" value={{user.mobile}} readonly>-->
-                  <p><strong>{{user.mobile}}</strong></p>
-                </div>
-              </div>
-
-
-              <div class="row form-group">
-                <div class="col-md-12 mb-3 mb-md-0">
-                  <label class="textarea-black" for="company_name">Company Name</label>
-                  <!--<input type="textarea" name="company_name" class="form-control" placeholder="Company Name" value={{user.company_name}} readonly>-->
-                  <p><strong>{{user.company_name}}</strong></p>
-                </div>
-              </div>
-
-              <div class="row form-group">
-                <div class="col-md-12 mb-3 mb-md-0">
-                  <label class="textarea-black" for="company_desc">Company Description</label>
-                  <!--<input type="textarea" name="company_desc" class="form-control" placeholder="Company Description" value={{user.company_desc}} readonly>-->
-                  <p><strong>{{user.company_desc}}</strong></p>
-                </div>
-              </div>
-
-              <!--<div class="row  text-right form-group">
-                <div class="col-md-12">
-                  <input type="submit" value="Update" class="btn px-4 btn-primary text-white">
-                </div>
-              </div>-->
-
-            </form>
-            
-
-            </div>
-           </div> 
-          </div>
-    </section>
+    
 
 
 
-
-    <section class="site-section">
+    <!--<section class="site-section">
         <div class="container">
           <div class="row">
             <div class="col-lg-3 mb-5">
@@ -99,11 +37,50 @@
                   Description : {{job.job_description}}</br>
                   Skills : {{job.job_skills}}</br>
                   Experience : {{job.job_experiance}}</br>
+                  Number of Openings : {{job.no_of_openings}}</br>
               </br></br>
               {% endfor %}
               
             </div>
+      </section>-->
+
+
+      <section class="site-section">
+        <div class="container">
+          <div class="border border-5">
+            <h2>Posted Jobs</h2>
+            <div class="container mb-3">
+          {% for job in jobs %}
+          <div class="col mb-5">
+          <div class="card mb-4">
+            <h3 class="card-header">{{ job.job_title}}</h3>
+              <div class="card-body">
+              <h6 class="card-title">{{ job.job_description }}</h6>
+              <p class="card-text"><h5>Experience :</h5>{{ job.job_experiance }}<br><h5>Skills :</h5>{{ job.job_skills }}<br><h5>Number of Openings :</h5>{{ job.no_of_openings }}<br></p>
+  
+              <!--<form class="input-group mb-3" method="POST" action={% url 'job_apply' %}>
+                {% csrf_token %}
+                <input type="text" class="form-control"  placeholder="Enter Your Email Id to Apply..." name="jobseeker_mail_id" aria-describedby="button-addon2">
+                <input type="text" class="form-control" placeholder="Enter The Job Name" name="job_name" aria-describedby="button-addon2">
+                <button class="btn btn-outline-success" type="submit" name="job_company_email" value={{ job.job_company_email }}>Apply</button>
+              </form>-->
+
+              <div class="row form-group text-right">
+                <div class="col-md-12">
+                  <input type="submit" value="Delete" class="btn px-4 btn-danger text-white">
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+  
+          {% endfor %}
+          </div>
+        </div>
+      </div>
       </section>
+  
 
       <section class="site-section">
         <div class="container">
@@ -145,6 +122,12 @@
                   <label for="job-experiance">Experiance Required</label>
                   <input type="text" class="form-control" name="job-experiance" placeholder="e.g. 0, 1, 2">
                 </div>
+
+                <div class="form-group">
+                  <label for="job-experiance">Number Of Openings</label>
+                  <input type="text" class="form-control" name="openings" placeholder="e.g. 0, 1, 2">
+                </div>
+
   
                 <div class="form-group">
                   <label for="company-name">Company Name</label>
@@ -180,6 +163,72 @@
           </div>-->
         </div>
       </section>
+
+
+
+      <section class="site-section">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 mb-5">
+              <h2 class="mb-4">My Profile - Recruiter</h2>
+              <form action={% url 'login_eval_jobrecruiter' %} class="p-4 border rounded">
+                  {% csrf_token %}
+                  <div class="row form-group">
+                      <div class="col-md-12 mb-3 mb-md-0">
+                        <label class="text-black" for="name">Name</label>
+                        <!--<input type="text" name="name" class="form-control" placeholder="Name" value={{user.name}} readonly>-->
+                        <p><strong>{{user.name}}</strong></p>
+                      </div>
+                    </div>
+  
+                <div class="row form-group">
+                  <div class="col-md-12 mb-3 mb-md-0">
+                    <label class="text-black" for="email">Email</label>
+                    <!--<input type="email" name="email" class="form-control" placeholder="Email-address" value={{user.email}} readonly>-->
+                    <p><strong>{{user.email}}</strong></p>
+                  </div>
+                </div>
+  
+  
+                <div class="row form-group">
+                  <div class="col-md-12 mb-3 mb-md-0">
+                    <label class="text-black" for="mobile">Mobile</label>
+                    <!--<input type="number" name="mobile" class="form-control" placeholder="Mobile" value={{user.mobile}} readonly>-->
+                    <p><strong>{{user.mobile}}</strong></p>
+                  </div>
+                </div>
+  
+  
+                <div class="row form-group">
+                  <div class="col-md-12 mb-3 mb-md-0">
+                    <label class="textarea-black" for="company_name">Company Name</label>
+                    <!--<input type="textarea" name="company_name" class="form-control" placeholder="Company Name" value={{user.company_name}} readonly>-->
+                    <p><strong>{{user.company_name}}</strong></p>
+                  </div>
+                </div>
+  
+                <div class="row form-group">
+                  <div class="col-md-12 mb-3 mb-md-0">
+                    <label class="textarea-black" for="company_desc">Company Description</label>
+                    <!--<input type="textarea" name="company_desc" class="form-control" placeholder="Company Description" value={{user.company_desc}} readonly>-->
+                    <p><strong>{{user.company_desc}}</strong></p>
+                  </div>
+                </div>
+  
+                <!--<div class="row  text-right form-group">
+                  <div class="col-md-12">
+                    <input type="submit" value="Update" class="btn px-4 btn-primary text-white">
+                  </div>
+                </div>-->
+  
+              </form>
+              
+  
+              </div>
+             </div> 
+            </div>
+      </section>
+  
   
     
 {% endblock %}

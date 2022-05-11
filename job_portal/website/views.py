@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from rest_framework.decorators import api_view
+from django.http import HttpResponseRedirect
 from .models import jobseeker_model,jobrecruiter_model,jobs_model,job_apply_model
 from .serializers import log_jobseeker_Serializer,log_jobrecruiter_Serializer,log_jobsmodel_Serializer,job_apply_Serializer
 
@@ -32,6 +33,7 @@ def login_eval_jobrecruiter(request):
 			job_experience=request.POST.get('job-experiance')
 			job_company_name=request.POST.get('company-name')
 			job_company_email=request.POST.get('company-email')
+			job_openings=request.POST.get('openings')
 
 			print(job_title,job_experience)
 
@@ -44,6 +46,7 @@ def login_eval_jobrecruiter(request):
 				job_experiance=job_experience,
 				job_company_name=job_company_name,
 				job_company_email=job_company_email,
+				no_of_openings=job_openings
 				)
 			if job_title!=None:
 				reg.save()
@@ -126,7 +129,8 @@ def login_eval_jobseeker(request):
 		serializer_applied_job = job_apply_Serializer(job_apply_models,many=True)
 		applied_list=[]
 		for i in serializer_applied_job.data:
-			applied_list.append(dict(i))
+			if i['job_seeker_email']==email:
+				applied_list.append(dict(i))
 		print("APPLIED JOBS---->>>>",applied_list)
 		
     
@@ -359,7 +363,7 @@ def job_apply(request):
             
         
 
-        
+        #return HttpResponseRedirect(request,'login_jobseeker.html',{'user':login_seeker[0],'jobs':new_jobs_list,'applied_job':applied_job_list})
         return render(request,'login_jobseeker.html',{'user':login_seeker[0],'jobs':new_jobs_list,'applied_job':applied_job_list})
         #if Flag==False:
         #    return render(request,'register.html')

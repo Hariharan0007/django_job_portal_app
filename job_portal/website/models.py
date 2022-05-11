@@ -40,6 +40,7 @@ class jobs_model(models.Model):
     job_experiance = models.IntegerField()
     job_company_name = models.CharField(max_length=50)
     job_company_email = models.EmailField(max_length=50)
+    no_of_openings = models.IntegerField()
     def __str__(self):
         return self.job_company_name +' ' + self.job_title + ' ' + self.job_company_email
     

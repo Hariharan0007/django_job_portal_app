@@ -18,7 +18,7 @@ class log_jobsmodel_Serializer(serializers.ModelSerializer):
     
     class Meta:
         model = jobs_model
-        fields = ['job_title','job_description','job_skills','job_experiance','job_company_name','job_company_email']
+        fields = ['job_title','job_description','job_skills','job_experiance','job_company_name','job_company_email','no_of_openings']
         
 class job_apply_Serializer(serializers.ModelSerializer):
     
