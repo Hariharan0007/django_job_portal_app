@@ -168,10 +168,10 @@ def login_eval_jobseeker(request):
 									applied_job_list.append(jobs)
 					print("APPLIED JOBS LIST ==>>>",applied_job_list)
 					new_jobs_list=[]
-					for jb in applied_job_list:
+					for jb in jobs_list:
 						print(jb)
 						flag=False #logic to get
-						for jobs in jobs_list:
+						for jobs in applied_job_list:
 							print(jobs)
 							if jb['job_title']==jobs['job_title'] and jb['job_company_email']==jobs['job_company_email']:
 								flag=True
@@ -222,12 +222,10 @@ def reg_jobseeker(request):
 			passed_out_year=poy,
 			percentile=percentile,
 			experience=experiance,
-			applied_job=0,
-			applied_company=0
    		)
         reg.save()
         print(reg)
-        return render(request,'login_jobseeker.html',{'user':reg})
+        return render(request,'login.html',{'user':reg})
         #return render("about.html")
         
         

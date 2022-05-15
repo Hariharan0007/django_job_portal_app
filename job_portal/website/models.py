@@ -34,7 +34,9 @@ class jobrecruiter_model(models.Model): # JobRecruiter Registration
     
     
 class jobs_model(models.Model):
-    job_title = models.CharField(max_length=100)
+    class Meta:
+        unique_together=(('job_title','job_company_name'),)
+    job_title = models.CharField(max_length=100,)
     job_description = models.CharField(max_length=100)
     job_skills = models.CharField(max_length=150)
     job_experiance = models.IntegerField()
@@ -50,5 +52,5 @@ class job_apply_model(models.Model):
     job_company_email = models.EmailField(max_length=50)
     job_seeker_email = models.EmailField(max_length=50)
     def __str__(self):
-        return self.job_seeker_email + '-->>' +self.job_title + ' ' + self.job_company_email 
+        return self.job_seeker_email + ' ' +self.job_title + ' ' + self.job_company_email 
         
