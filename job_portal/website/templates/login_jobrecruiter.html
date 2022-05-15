@@ -64,12 +64,6 @@
                 <input type="text" class="form-control" placeholder="Enter The Job Name" name="job_name" aria-describedby="button-addon2">
                 <button class="btn btn-outline-success" type="submit" name="job_company_email" value={{ job.job_company_email }}>Apply</button>
               </form>-->
-
-              <div class="row form-group text-right">
-                <div class="col-md-12">
-                  <input type="submit" value="Delete" class="btn px-4 btn-danger text-white">
-                </div>
-              </div>
               
             </div>
           </div>
@@ -89,7 +83,7 @@
             <div class="col-lg-8 mb-4 mb-lg-0">
               <div class="d-flex align-items-center">
                 <div>
-                  <h2>Post A Job</h2>
+                  <h2>Post A Job [New / Update]</h2>
                 </div>
               </div>
             </div>
@@ -98,11 +92,11 @@
             <div class="col-lg-12">
               <form action={% url 'login_eval_jobrecruiter' %}  class="p-4 p-md-5 border rounded" method="post">
                 {% csrf_token %}
-                <h3 class="text-black mb-5 border-bottom pb-2">Job Details</h3>
+                <h3 class="text-black mb-5 border-bottom pb-2">Job Details </h3>
   
                 <div class="form-group">
                   <label for="job-title">Job Title</label>
-                  <input type="text" class="form-control" name="job-title" placeholder="Product Designer">
+                  <input type="text" class="form-control" name="job-title" placeholder="Job-Title">
                 </div>
   
                 <div class="form-group">
@@ -136,16 +130,12 @@
   
                 <div class="form-group">
                   <label for="company-email">Registerd Email</label>
-                  <input type="text" class="form-control" name="company-email" placeholder="abc@email.com">
+                  <input type="text" class="form-control" name="company-email" placeholder="Company Registered Email">
                 </div>
 
                 <div class="row text-right form-group">
                   <div class="col-md-12">
-                    <input type="submit" value="Save Job" class="btn px-4 btn-primary text-white">
-                  </div>
-                
-                  <div class="col-md-12">
-                    <input type="submit" value="Save Job" class="btn px-4 btn-primary text-white">
+                    <input type="submit" value="Save/Update Job" class="btn px-4 btn-primary text-white">
                   </div>
                 </div>
 
@@ -170,6 +160,47 @@
           </div>-->
         </div>
       </section>
+
+
+
+      <section class="site-section">
+        <div class="container">
+          <!--
+          <div class="row align-items-center mb-5">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+              <div class="d-flex align-items-center">
+                <div>-->
+                  <!--<h2>Post A Job [New / Update]</h2>-->
+                <!--</div>
+              </div>
+            </div>
+          </div>-->
+          <div class="row allign-items-center mb-5">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+              <form action={% url 'login_eval_jobrecruiter' %}  class="p-4 p-md-5 border rounded" method="post">
+                {% csrf_token %}
+                <h3 class="text-black mb-5 border-bottom pb-2">Delete a Job </h3>
+  
+                <div class="form-group">
+                  <label for="job-delete">Job Title</label>
+                  <input type="text" class="form-control" name="job_delete" placeholder="Enter the Job Title ">
+                </div>
+  
+
+                <div class="row text-right form-group">
+                  <div class="col-md-12">
+                    <button type="submit" name="email_for_del" value={{user.email}} class="btn px-4 btn-danger text-white">Delete</button>
+                  </div>
+                </div>
+
+
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
 
 
 

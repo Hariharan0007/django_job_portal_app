@@ -48,7 +48,10 @@ class jobs_model(models.Model):
     
     
 class job_apply_model(models.Model):
-    job_title = models.CharField(max_length=100,primary_key=True) # primary_key to avoid duplicate
+
+    class Meta:
+        unique_together = (('id','job_company_email'),)
+    job_title = models.CharField(max_length=100) # primary_key to avoid duplicate
     job_company_email = models.EmailField(max_length=50)
     job_seeker_email = models.EmailField(max_length=50)
     def __str__(self):

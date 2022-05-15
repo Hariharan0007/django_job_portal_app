@@ -24,6 +24,8 @@ def login_eval_jobrecruiter(request):
 		email=request.POST.get('email')
 		pwsd=request.POST.get('password')
 		print(rec_name,email,pwsd)
+		
+			
   
   
 		try:
@@ -49,7 +51,9 @@ def login_eval_jobrecruiter(request):
 				no_of_openings=job_openings
 				)
 			if job_title!=None:
+				print("^^^^JOB SAVED^^^^^")
 				reg.save()
+				print(reg)
 			print(reg)
 		except:
 			pass
@@ -61,7 +65,10 @@ def login_eval_jobrecruiter(request):
 			jobs_list.append(dict(i))
 		print(jobs_list)
   
-
+		
+			
+						
+					
 
 
 		jobrecruiter_models=jobrecruiter_model.objects.all()
@@ -70,7 +77,24 @@ def login_eval_jobrecruiter(request):
 		for i in serializer.data:
 			recruiter_list.append(dict(i))
 		print(recruiter_list)
+
+		if request.POST.get('job_delete')!=None:
+			print("^^^^^^^^^^^^ DELETE A JOB ^^^^^^^^^")
+			email_in_del = request.POST.get('email_for_del')
+			job_del=request.POST.get('job_delete')
+			job_delete = jobs_model.objects.filter(job_title=job_del,job_company_email=email_in_del)
+			job_delete.delete()
+			job_apply_del = job_apply_model.objects.filter(job_title=job_del,job_company_email = email_in_del)
+			job_apply_del.delete()
+			for attributes in recruiter_list:
+				if attributes['email']==email_in_del:
+					rec_name=attributes['name']
+					email=attributes['email']
+					pwsd= attributes['pwsd']
+					break
   
+  
+
 		if rec_name==None:
 			for attributes in recruiter_list:
 				if attributes['company_name']==job_company_name:
@@ -288,7 +312,28 @@ def job_apply(request):
 			job_company_email=company_mail
 		)
         
-        job_apply.save()
+    
+        all_jobs = job_apply_model.objects.all()
+        all_jobs_serializer = job_apply_Serializer(all_jobs,many=True)
+        
+        all_jobs_list = []
+        
+        for i in all_jobs_serializer.data:
+            all_jobs_list.append(dict(i))
+            
+        print("ALL JOBS -->",all_jobs_list)
+        flag=False
+        for a_job in all_jobs_list:
+            print("JOB_COMPARE",a_job)
+            if a_job['job_company_email']==company_mail and a_job['job_seeker_email']==job_seeker_mail and a_job['job_title']==job_name:
+                print("flag is True")
+                flag=True
+        if flag==False:
+            job_apply.save()
+                
+        
+        
+        
         print("Data Saved in a Model")
 
         
