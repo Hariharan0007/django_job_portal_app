@@ -35,7 +35,7 @@ class jobrecruiter_model(models.Model): # JobRecruiter Registration
     
 class jobs_model(models.Model):
     class Meta:
-        unique_together=(('job_title','job_company_name'),)
+        unique_together=(('job_title','job_company_name'),) #composite key
     job_title = models.CharField(max_length=100,)
     job_description = models.CharField(max_length=100)
     job_skills = models.CharField(max_length=150)
